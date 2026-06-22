@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Learning Platform</title>
+    <meta name="description" content="Manage your account settings, theme, and password.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap brand-icon"></i>
+            Student Portal
+        </div>
+        <ul class="nav-links">
+            <li><a href="student.html" class="nav-item"><i class="fa-solid fa-house"></i>My Learning</a></li>
+            <li><a href="student-tests.html" class="nav-item"><i class="fa-solid fa-file-pen"></i>My Tests</a></li>
+            <li><a href="student-profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i>My Profile</a></li>
+            <li><a href="student-settings.html" class="nav-item active"><i class="fa-solid fa-sliders"></i>Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="icon-btn" id="mobile-menu-btn" style="display:none;"><i class="fa-solid fa-bars"></i></button>
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="global-theme-toggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <button class="icon-btn" id="student-notifications-btn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-badge" id="student-notif-badge" style="display:none;">0</span>
+                </button>
+                <div class="profile-menu">
+                    <img src="" alt="Student" class="profile-avatar" id="student-avatar">
+                    <div class="profile-info"><h4 id="student-name">Student</h4><p>Learner</p></div>
+                    <i class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--text-muted);"></i>
+                </div>
+            </div>
+            <div class="notifications-dropdown" id="student-notifications-dropdown">
+                <div class="notifications-header">
+                    <h3>Notifications</h3>
+                    <button class="mark-all-read" id="mark-all-read-btn">Mark all as read</button>
+                </div>
+                <div class="notifications-list" id="student-notifications-list">
+                    <div class="notifications-empty"><i class="fa-regular fa-bell"></i> No notifications yet</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container animate-fade-in">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Settings</h1>
+                    <p>Manage your account preferences and security.</p>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+
+                <!-- Profile Edit -->
+                <div class="glass-panel settings-card">
+                    <div class="settings-card-header">
+                        <div class="settings-icon-wrap" style="background:rgba(59,130,246,0.15);">
+                            <i class="fa-solid fa-user-pen" style="color:#3b82f6;"></i>
+                        </div>
+                        <div>
+                            <h3>Edit Profile</h3>
+                            <p>Update your personal information</p>
+                        </div>
+                    </div>
+                    <form id="student-profile-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="s-setting-name" class="form-input" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="s-setting-email" class="form-input" placeholder="Your email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" id="s-setting-phone" class="form-input" placeholder="+91 9876543210">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            <textarea id="s-setting-bio" class="form-input" rows="3" placeholder="Tell something about yourself..." style="resize:vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Change Password -->
+                <div class="glass-panel settings-card">
+                    <div class="settings-card-header">
+                        <div class="settings-icon-wrap" style="background:rgba(239,68,68,0.15);">
+                            <i class="fa-solid fa-lock" style="color:#ef4444;"></i>
+                        </div>
+                        <div>
+                            <h3>Change Password</h3>
+                            <p>Update your account password</p>
+                        </div>
+                    </div>
+                    <form id="student-password-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" id="s-current-password" class="form-input" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="s-new-password" class="form-input" placeholder="Min. 6 characters">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="s-confirm-password" class="form-input" placeholder="Re-enter new password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;background:linear-gradient(135deg,#ef4444,#dc2626);">
+                            <i class="fa-solid fa-shield-halved"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Appearance -->
+                <div class="glass-panel settings-card">
+                    <div class="settings-card-header">
+                        <div class="settings-icon-wrap" style="background:rgba(249,115,22,0.15);">
+                            <i class="fa-solid fa-palette" style="color:#f97316;"></i>
+                        </div>
+                        <div>
+                            <h3>Appearance</h3>
+                            <p>Customize your visual experience</p>
+                        </div>
+                    </div>
+                    <div class="settings-toggle-row">
+                        <div class="settings-toggle-info">
+                            <i class="fa-solid fa-bell" style="color:var(--accent-purple);"></i>
+                            <div>
+                                <div style="font-weight:600;font-size:14px;">Notifications</div>
+                                <div style="font-size:12px;color:var(--text-muted);">Enable or disable notifications</div>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="s-notif-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="glass-panel settings-card" style="border-color:rgba(239,68,68,0.2);">
+                    <div class="settings-card-header">
+                        <div class="settings-icon-wrap" style="background:rgba(239,68,68,0.15);">
+                            <i class="fa-solid fa-right-from-bracket" style="color:#ef4444;"></i>
+                        </div>
+                        <div>
+                            <h3>Account</h3>
+                            <p>Manage your session</p>
+                        </div>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Logging out will end your current session. You will need to sign in again.</p>
+                    <button id="s-logout-btn" class="btn btn-outline" style="width:100%;border-color:#ef4444;color:#ef4444;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+<script src="app.js?v=1.0.1"></script>
+</body>
+</html>

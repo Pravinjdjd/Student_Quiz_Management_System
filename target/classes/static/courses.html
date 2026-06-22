@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management | Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap brand-icon"></i>
+                Admin LMS
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="index.html" class="nav-item">
+                        <i class="fa-solid fa-house"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="courses.html" class="nav-item active">
+                        <i class="fa-solid fa-book-open"></i>
+                        Courses
+                    </a>
+                </li>
+                <li>
+                    <a href="students.html" class="nav-item">
+                        <i class="fa-solid fa-users"></i>
+                        Students
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-tests.html" class="nav-item">
+                        <i class="fa-solid fa-file-pen"></i>
+                        Tests
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="nav-item">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html" class="nav-item">
+                        <i class="fa-solid fa-gear"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <button class="icon-btn" id="mobile-menu-btn" style="display: none;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search courses...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    
+                    <div class="profile-menu">
+                        <img src="" alt="Admin" class="profile-avatar">
+                        <div class="profile-info">
+                            <h4>Loading...</h4>
+                            <p>Platform Manager</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-muted);"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-container animate-fade-in">
+                
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Course Management</h1>
+                        <p>Manage your platform's courses, modules, and video content.</p>
+                    </div>
+                    <button class="btn btn-primary" id="add-course-btn">
+                        <i class="fa-solid fa-plus"></i> Create Course
+                    </button>
+                </div>
+                
+                <!-- Filters and Tabs -->
+                <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                    <button class="btn btn-outline" style="border-color: var(--accent-blue); background: rgba(59, 130, 246, 0.1);">All Courses</button>
+                    <button class="btn btn-outline">Published</button>
+                    <button class="btn btn-outline">Drafts</button>
+                </div>
+
+                <!-- Course Grid -->
+                <div class="course-grid" id="course-grid">
+                    
+                    <!-- Add Course Placeholder -->
+                    <div id="open-add-course-modal" class="glass-panel course-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.2); background: transparent; min-height: 380px; cursor: pointer; transition: all 0.3s;">
+                        <div class="metric-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); width: 64px; height: 64px; border-radius: 50%; font-size: 24px; margin-bottom: 16px;">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <h3 style="color: var(--text-secondary);">Create New Course</h3>
+                        <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px;">Add video links and details</p>
+                    </div>
+
+                </div>
+                
+                <!-- Expandable Card Overlay (Hidden by default) -->
+                <div id="expandable-overlay" class="expandable-overlay">
+                    <div class="expandable-backdrop" id="expandable-backdrop"></div>
+                    <div class="expanded-card glass-panel" id="expanded-card">
+                        <button class="close-expanded icon-btn" id="close-expanded">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div class="expanded-header">
+                            <div class="expanded-thumbnail" id="expanded-thumbnail"></div>
+                        </div>
+                        <div class="expanded-content">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                <div>
+                                    <h2 id="expanded-title" style="margin-bottom: 8px; font-size: 24px;">Course Title</h2>
+                                    <p id="expanded-subtitle" style="color: var(--text-secondary); font-size: 14px;">Instructor or Channel Name</p>
+                                </div>
+                                <button class="btn btn-primary">Edit Course</button>
+                            </div>
+                            
+                            <div class="expanded-description" style="margin-bottom: 24px; color: var(--text-muted); line-height: 1.6;">
+                                This is a detailed description of the course. It covers everything the student will learn, the prerequisites, and the expected outcomes.
+                            </div>
+
+                            <h3 style="margin-bottom: 16px; font-size: 18px;">Featured Video</h3>
+                            <div style="border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 16/9; background: #000; margin-bottom: 24px;">
+                                <iframe id="expanded-video" width="100%" height="100%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Course Modal -->
+                <div id="create-course-modal" class="expandable-overlay">
+                    <div class="expandable-backdrop" id="create-modal-backdrop"></div>
+                    <div class="glass-panel" style="position: relative; z-index: 1001; width: 90%; max-width: 500px; padding: 32px; transform: scale(1); opacity: 1;">
+                        <button class="close-expanded icon-btn" id="close-create-modal" style="background: var(--bg-dark);">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <h2 style="margin-bottom: 24px;">Create New Course</h2>
+                        <form id="create-course-form">
+                            <div class="form-group">
+                                <label for="course-title">Course Title *</label>
+                                <input type="text" id="course-title" placeholder="e.g. Advanced JavaScript" required style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                            </div>
+                            <div class="form-group">
+                                <label for="course-author">Instructor / Channel *</label>
+                                <input type="text" id="course-author" placeholder="e.g. Error Makes Clever" required style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                            </div>
+                            <div class="form-group">
+                                <label for="course-image">Thumbnail Image URL</label>
+                                <input type="url" id="course-image" placeholder="https://images.unsplash.com/..." style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                            </div>
+                            <div class="form-group">
+                                <label for="course-video">YouTube Embed URL</label>
+                                <input type="url" id="course-video" placeholder="https://www.youtube.com/embed/..." style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div class="form-group">
+                                    <label for="course-modules">Number of Modules</label>
+                                    <input type="number" id="course-modules" placeholder="0" min="0" style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                                </div>
+                                <div class="form-group">
+                                    <label for="course-duration">Duration</label>
+                                    <input type="text" id="course-duration" placeholder="e.g. 12 Hr 30 mins" style="background: var(--bg-dark); color: var(--text-primary); border-color: var(--border-light);">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;">Save Course</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js?v=1.0.1"></script>
+</body>
+</html>

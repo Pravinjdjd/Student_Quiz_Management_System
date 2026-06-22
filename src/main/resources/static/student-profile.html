@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Learning Platform</title>
+    <meta name="description" content="View and manage your student profile, track enrolled courses and achievements.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap brand-icon"></i>
+            Student Portal
+        </div>
+        <ul class="nav-links">
+            <li><a href="student.html" class="nav-item"><i class="fa-solid fa-house"></i>My Learning</a></li>
+            <li><a href="student-tests.html" class="nav-item"><i class="fa-solid fa-file-pen"></i>My Tests</a></li>
+            <li><a href="student-profile.html" class="nav-item active"><i class="fa-solid fa-circle-user"></i>My Profile</a></li>
+            <li><a href="student-settings.html" class="nav-item"><i class="fa-solid fa-sliders"></i>Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="icon-btn" id="mobile-menu-btn" style="display:none;"><i class="fa-solid fa-bars"></i></button>
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="global-theme-toggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <button class="icon-btn" id="student-notifications-btn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-badge" id="student-notif-badge" style="display:none;">0</span>
+                </button>
+                <div class="profile-menu">
+                    <img src="" alt="Student" class="profile-avatar" id="student-avatar">
+                    <div class="profile-info"><h4 id="student-name">Student</h4><p>Learner</p></div>
+                    <i class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--text-muted);"></i>
+                </div>
+            </div>
+            <div class="notifications-dropdown" id="student-notifications-dropdown">
+                <div class="notifications-header">
+                    <h3>Notifications</h3>
+                    <button class="mark-all-read" id="mark-all-read-btn">Mark all as read</button>
+                </div>
+                <div class="notifications-list" id="student-notifications-list">
+                    <div class="notifications-empty"><i class="fa-regular fa-bell"></i> No notifications yet</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container animate-fade-in">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>My Profile</h1>
+                    <p>View your learning stats and manage your personal information.</p>
+                </div>
+            </div>
+
+            <!-- Profile Hero Card -->
+            <div class="glass-panel profile-hero-card" style="padding:32px; margin-bottom:24px;">
+                <div class="profile-hero-inner">
+                    <div class="profile-avatar-large" id="profile-avatar-large" style="position:relative; cursor:pointer;">
+                        <img src="" alt="Avatar" id="profile-avatar-img" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        <label for="profile-pic-upload" style="position:absolute; bottom:0; right:0; background:var(--accent-blue); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; border:2px solid var(--bg-panel); cursor:pointer;" title="Upload Profile Picture">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="profile-pic-upload" accept="image/*" style="display:none;">
+                    </div>
+                    <div class="profile-hero-info">
+                        <h2 id="profile-full-name" style="font-size:28px;font-weight:700;margin-bottom:6px;">Loading...</h2>
+                        <p id="profile-email" style="color:var(--text-secondary);margin-bottom:10px;font-size:15px;"></p>
+                        <div id="profile-bio-display" style="color:var(--text-muted);font-size:14px;max-width:500px;line-height:1.6;"></div>
+                        <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+                            <span id="profile-phone-badge" class="profile-badge" style="display:none;">
+                                <i class="fa-solid fa-phone"></i> <span id="profile-phone-text"></span>
+                            </span>
+                            <a href="#" id="profile-resume-link" target="_blank" class="profile-badge resume-badge" style="display:none;">
+                                <i class="fa-solid fa-file-arrow-down"></i> View Resume
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-grid-3" style="margin-bottom:24px;">
+                <div class="glass-panel stat-card-mini">
+                    <div class="stat-icon-mini" style="background:rgba(59,130,246,0.15);">
+                        <i class="fa-solid fa-book-open" style="color:#3b82f6;"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="stat-enrolled">–</div>
+                        <div class="stat-label">Enrolled Courses</div>
+                    </div>
+                </div>
+                <div class="glass-panel stat-card-mini">
+                    <div class="stat-icon-mini" style="background:rgba(16,185,129,0.15);">
+                        <i class="fa-solid fa-circle-check" style="color:#10b981;"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="stat-completed">–</div>
+                        <div class="stat-label">Completed Courses</div>
+                    </div>
+                </div>
+                <div class="glass-panel stat-card-mini">
+                    <div class="stat-icon-mini" style="background:rgba(139,92,246,0.15);">
+                        <i class="fa-solid fa-clock" style="color:#8b5cf6;"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="stat-hours">–</div>
+                        <div class="stat-label">Study Hours</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Progress Section -->
+            <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i class="fa-solid fa-chart-line" style="color:var(--accent-blue);margin-right:8px;"></i>Course Progress</h2>
+                </div>
+                <div id="course-progress-list">
+                    <div style="color:var(--text-muted);text-align:center;padding:40px;">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size:28px;margin-bottom:12px;display:block;"></i>Loading...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Section -->
+            <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i class="fa-solid fa-file-pdf" style="color:var(--accent-purple);margin-right:8px;"></i>Resume / CV</h2>
+                </div>
+                <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px;">Upload your resume (PDF, Word DOCX or image files) from your local device.</p>
+                <form id="resume-upload-form" style="display:flex; flex-direction:column; gap:16px;">
+                    <div style="border: 2px dashed var(--border-light); border-radius: 12px; padding: 32px; text-align: center; background: rgba(255,255,255,0.01); cursor: pointer; position: relative;" id="resume-drop-zone">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:40px; color:var(--text-secondary); margin-bottom:12px; display:block;"></i>
+                        <span style="font-weight:600; display:block; margin-bottom:4px;">Drag and drop your file here, or browse</span>
+                        <span style="font-size:12px; color:var(--text-muted);">Supports PDF, DOCX, Images up to 5MB</span>
+                        <input type="file" id="resume-file-input" accept=".pdf,.doc,.docx,image/*" style="position:absolute; inset:0; opacity:0; cursor:pointer;">
+                    </div>
+                    <div id="resume-file-info" style="display:none; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.03); border-radius:8px; border:1px solid var(--border-light);">
+                        <i class="fa-regular fa-file-pdf" style="font-size:24px; color:#ef4444;" id="file-icon"></i>
+                        <div style="flex:1; min-width:0;">
+                            <div id="file-name" style="font-weight:600; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">resume.pdf</div>
+                            <div id="file-size" style="font-size:12px; color:var(--text-muted);">1.2 MB</div>
+                        </div>
+                        <button type="button" class="icon-btn" id="remove-file-btn" style="width:28px; height:28px; border-color:#ef4444; color:#ef4444;" title="Remove file"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="resume-submit-btn" disabled style="align-self:flex-start;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Resume File
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="app.js?v=1.0.1"></script>
+</body>
+</html>

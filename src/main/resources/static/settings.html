@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Admin Dashboard</title>
+    <meta name="description" content="Manage your admin profile, appearance, and platform preferences on the Learning Platform.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap brand-icon"></i>
+                Admin LMS
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                <li><a href="courses.html" class="nav-item"><i class="fa-solid fa-book-open"></i> Courses</a></li>
+                <li><a href="students.html" class="nav-item"><i class="fa-solid fa-users"></i> Students</a></li>
+                <li><a href="admin-tests.html" class="nav-item"><i class="fa-solid fa-file-pen"></i> Tests</a></li>
+                <li><a href="analytics.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="settings.html" class="nav-item active"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <button class="icon-btn" id="mobile-menu-btn" style="display: none;"><i class="fa-solid fa-bars"></i></button>
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search settings...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+                    <div class="profile-menu">
+                        <img src="" alt="Admin" class="profile-avatar">
+                        <div class="profile-info"><h4>Loading...</h4><p>Platform Manager</p></div>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-muted);"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-container animate-fade-in">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Settings</h1>
+                        <p>Manage your profile, appearance, and platform preferences.</p>
+                    </div>
+                </div>
+
+                <!-- Settings Grid -->
+                <div class="settings-container">
+
+                    <!-- LEFT COLUMN -->
+                    <div class="settings-section">
+
+                        <!-- Profile Settings -->
+                        <div class="glass-panel" style="padding: 28px;">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-user" style="color: var(--accent-blue);"></i> Profile Information
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px;">
+                                Update your display name and account information.
+                            </p>
+                            <form id="profile-update-form" class="settings-form">
+                                <div class="form-group" style="margin-bottom: 16px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Full Name</label>
+                                    <input type="text" id="setting-name" placeholder="Your display name" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Email Address</label>
+                                    <input type="email" id="setting-email" placeholder="your@email.com" readonly style="opacity: 0.6; cursor: not-allowed;">
+                                    <small style="color: var(--text-muted); font-size: 12px; margin-top: 4px; display: block;">Email cannot be changed.</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                                    <i class="fa-solid fa-floppy-disk"></i> Update Profile
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Change Password -->
+                        <div class="glass-panel" style="padding: 28px;">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-lock" style="color: var(--accent-purple);"></i> Change Password
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px;">
+                                Ensure your account is secured with a strong password.
+                            </p>
+                            <form id="change-password-form" class="settings-form">
+                                <div class="form-group" style="margin-bottom: 16px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Current Password</label>
+                                    <input type="password" id="current-password" placeholder="Enter current password" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 16px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">New Password</label>
+                                    <input type="password" id="new-password" placeholder="Min. 6 characters" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Confirm New Password</label>
+                                    <input type="password" id="confirm-password" placeholder="Repeat new password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                                    <i class="fa-solid fa-shield-halved"></i> Change Password
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Broadcast Announcement (Admin Only) -->
+                        <div class="glass-panel" style="padding: 28px; margin-top: 24px;">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-bullhorn" style="color: var(--accent-orange);"></i> Broadcast Announcement
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px;">
+                                Send a platform-wide notification to all students.
+                            </p>
+                            <form id="broadcast-form" class="settings-form">
+                                <div class="form-group" style="margin-bottom: 16px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Announcement Title</label>
+                                    <input type="text" id="broadcast-title" placeholder="e.g., Scheduled Maintenance or New Course!" required style="width: 100%; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--border-light); border-radius: 8px; padding: 10px 14px; font-family: inherit; font-size: 14px;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label style="font-size: 13px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 6px;">Message Content</label>
+                                    <textarea id="broadcast-message" placeholder="Write your announcement message here..." required style="width: 100%; min-height: 100px; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--border-light); border-radius: 8px; padding: 10px 14px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--accent-orange); border-color: var(--accent-orange);">
+                                    <i class="fa-solid fa-paper-plane"></i> Send to All Students
+                                </button>
+                            </form>
+
+                            <div style="margin-top: 32px;">
+                                <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-secondary);">Sent Announcements</h3>
+                                <div id="broadcasts-container" class="broadcast-list">
+                                    <!-- Loaded by JS -->
+                                    <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0;">Loading sent announcements...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="settings-section">
+
+                        <!-- Appearance -->
+                        <div class="glass-panel" style="padding: 28px;">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-palette" style="color: var(--accent-orange);"></i> Appearance
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px;">
+                                Customize how the platform looks for you.
+                            </p>
+
+                            <!-- Dark/Light Mode Toggle -->
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <h4><i class="fa-solid fa-moon" style="color: var(--accent-blue); margin-right: 8px;"></i>Light Mode</h4>
+                                    <p>Switch between dark and light interface themes.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="theme-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Font Size -->
+                            <div class="settings-item" style="margin-top: 4px;">
+                                <div class="settings-item-info">
+                                    <h4><i class="fa-solid fa-text-height" style="color: var(--accent-purple); margin-right: 8px;"></i>Interface Scale</h4>
+                                    <p>Choose your preferred text and UI size.</p>
+                                </div>
+                                <select id="font-size-select" class="settings-form" style="background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--border-light); border-radius: 8px; padding: 6px 12px; font-size: 13px; cursor: pointer;">
+                                    <option value="normal">Normal</option>
+                                    <option value="large">Large</option>
+                                    <option value="small">Compact</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Platform Preferences -->
+                        <div class="glass-panel" style="padding: 28px;">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-sliders" style="color: var(--accent-green);"></i> Platform Preferences
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px;">
+                                Control platform behavior and notifications.
+                            </p>
+
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <h4><i class="fa-regular fa-bell" style="color: var(--accent-orange); margin-right: 8px;"></i>Email Notifications</h4>
+                                    <p>Get notified when new students register.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notif-toggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <h4><i class="fa-solid fa-wrench" style="color: #ef4444; margin-right: 8px;"></i>Maintenance Mode</h4>
+                                    <p>Temporarily disable student access to the platform.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="maintenance-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <h4><i class="fa-solid fa-chart-line" style="color: var(--accent-blue); margin-right: 8px;"></i>Analytics Tracking</h4>
+                                    <p>Allow tracking of student engagement metrics.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="analytics-toggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Danger Zone -->
+                        <div class="glass-panel" style="padding: 28px; border-color: rgba(239, 68, 68, 0.2);">
+                            <h2 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; color: #ef4444;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Danger Zone
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; border-bottom: 1px solid rgba(239, 68, 68, 0.15); padding-bottom: 16px;">
+                                These actions are irreversible. Proceed with caution.
+                            </p>
+                            <button class="btn btn-outline" id="logout-btn-settings" style="width: 100%; justify-content: center; margin-bottom: 12px; border-color: rgba(239, 68, 68, 0.5); color: #ef4444;">
+                                <i class="fa-solid fa-right-from-bracket"></i> Sign Out of All Sessions
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js?v=1.0.1"></script>
+    <script>
+        // Extra settings-page logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Font size preference
+            const fontSelect = document.getElementById('font-size-select');
+            if (fontSelect) {
+                const savedSize = localStorage.getItem('font-size') || 'normal';
+                fontSelect.value = savedSize;
+                applyFontSize(savedSize);
+
+                fontSelect.addEventListener('change', () => {
+                    const size = fontSelect.value;
+                    localStorage.setItem('font-size', size);
+                    applyFontSize(size);
+                    window.showToast && window.showToast('Font size updated!', 'success');
+                });
+            }
+
+            function applyFontSize(size) {
+                const root = document.documentElement;
+                if (size === 'large') root.style.fontSize = '17px';
+                else if (size === 'small') root.style.fontSize = '13px';
+                else root.style.fontSize = '16px';
+            }
+
+            // Analytics toggle persistence
+            const analyticsToggle = document.getElementById('analytics-toggle');
+            if (analyticsToggle) {
+                analyticsToggle.checked = localStorage.getItem('analytics-enabled') !== 'false';
+                analyticsToggle.addEventListener('change', () => {
+                    localStorage.setItem('analytics-enabled', analyticsToggle.checked);
+                    window.showToast && window.showToast(`Analytics ${analyticsToggle.checked ? 'enabled' : 'disabled'}`, 'success');
+                });
+            }
+
+            // Settings logout button
+            const logoutBtn = document.getElementById('logout-btn-settings');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    if (confirm('Sign out of all sessions? You will need to log in again.')) {
+                        sessionStorage.clear();
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
