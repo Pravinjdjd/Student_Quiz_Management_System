@@ -47,6 +47,7 @@ public class SecurityConfig {
                 // Public authentication endpoints & H2 Console
                 .requestMatchers("/api/auth/login", "/api/auth/signup", "/api/auth/logout").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
                 
                 // Public course viewing
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/courses/**").permitAll()

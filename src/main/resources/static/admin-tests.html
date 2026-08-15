@@ -151,6 +151,8 @@
                             <option value="MCQ">Multiple Choice (MCQ)</option>
                             <option value="TRUE_FALSE">True / False</option>
                             <option value="SHORT_ANSWER">Short Answer</option>
+                            <option value="FILL_IN_BLANKS">Fill in the Blanks</option>
+                            <option value="CODING">Coding Round</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -197,6 +199,19 @@
                         <div class="form-group">
                             <label class="form-label">Expected Answer / Keyword</label>
                             <input type="text" id="aqf-correct-sa" class="form-input" placeholder="e.g. polymorphism">
+                        </div>
+                    </div>
+                    <div id="fib-options-group" style="display:none;">
+                        <div class="form-group">
+                            <label class="form-label">Expected Exact Answer</label>
+                            <input type="text" id="aqf-correct-fib" class="form-input" placeholder="e.g. Object Oriented Programming">
+                        </div>
+                    </div>
+                    <div id="coding-options-group" style="display:none;">
+                        <div class="form-group">
+                            <label class="form-label">Reference Code / Expected Output (for manual review)</label>
+                            <textarea id="aqf-correct-coding" class="form-input" rows="4" placeholder="Reference implementation for graders..."></textarea>
+                            <small style="color:var(--text-muted);font-size:12px;">Coding questions must be manually reviewed. Auto-grading will assign 0 marks initially.</small>
                         </div>
                     </div>
                     <div class="form-group">

@@ -94,37 +94,41 @@
     <script>
         // Additional Analytics Charts
         document.addEventListener('DOMContentLoaded', () => {
-            const revCanvas = document.getElementById('revenueChart');
-            if (revCanvas) {
-                new Chart(revCanvas, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                        datasets: [{
-                            label: 'Revenue ($)',
-                            data: [12000, 19000, 15000, 25000, 22000, 30000],
-                            backgroundColor: '#10b981',
-                            borderRadius: 6
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
-                });
-            }
+            try {
+                const revCanvas = document.getElementById('revenueChart');
+                if (revCanvas) {
+                    new Chart(revCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Revenue ($)',
+                                data: [12000, 19000, 15000, 25000, 22000, 30000],
+                                backgroundColor: '#10b981',
+                                borderRadius: 6
+                            }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
+                    });
+                }
 
-            const popCanvas = document.getElementById('popularityChart');
-            if (popCanvas) {
-                new Chart(popCanvas, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Java Full Stack', 'HTML & CSS', 'Data Structures', 'Advanced Java'],
-                        datasets: [{
-                            data: [45, 25, 20, 10],
-                            backgroundColor: ['#3b82f6', '#8b5cf6', '#f97316', '#10b981'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }, cutout: '70%' }
-                });
+                const popCanvas = document.getElementById('popularityChart');
+                if (popCanvas) {
+                    new Chart(popCanvas, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Java Full Stack', 'HTML & CSS', 'Data Structures', 'Advanced Java'],
+                            datasets: [{
+                                data: [45, 25, 20, 10],
+                                backgroundColor: ['#3b82f6', '#8b5cf6', '#f97316', '#10b981'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }, cutout: '70%' }
+                    });
+                }
+            } catch (err) {
+                console.error('Chart.js initialization failed:', err);
             }
 
             // PDF Export Logic
@@ -134,7 +138,7 @@
                     exportBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
                     exportBtn.disabled = true;
                     
-                    const element = document.querySelector('.page-container');
+                    const element = document.querySelector('.page-container') || document.body;
                     const opt = {
                         margin: 10,
                         filename: 'Platform_Analytics_Report.pdf',

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function apiFetch(url, options = {}) {
         options.credentials = 'include';
-        if (options.body && typeof options.body === 'object') {
+        if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
             options.headers = options.headers || {};
             if (!options.headers['Content-Type']) {
                 options.headers['Content-Type'] = 'application/json';
@@ -1034,35 +1034,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        myCoursesContainer.addEventListener('click', async (e) => {
-            const enrollBtn = e.target.closest('.enroll-btn');
-            if (enrollBtn) {
-                const courseId = enrollBtn.getAttribute('data-id');
-                try {
-                    const res = await apiFetch(`/api/students/enroll/${courseId}`, { method: 'POST' });
-                    const data = await res.json();
-                    if (res.ok) {
-                        showToast('Enrolled in course successfully!', 'success');
-                        loadStudentCourses();
-                    } else {
-                        showToast(data.message || 'Failed to enroll.', 'error');
+        if (myCoursesContainer) {
+            myCoursesContainer.addEventListener('click', async (e) => {
+                const enrollBtn = e.target.closest('.enroll-btn');
+                if (enrollBtn) {
+                    const courseId = enrollBtn.getAttribute('data-id');
+                    try {
+                        const res = await apiFetch(`/api/students/enroll/${courseId}`, { method: 'POST' });
+                        const data = await res.json();
+                        if (res.ok) {
+                            showToast('Enrolled in course successfully!', 'success');
+                            loadStudentCourses();
+                        } else {
+                            showToast(data.message || 'Failed to enroll.', 'error');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        showToast('Error enrolling in course.', 'error');
                     }
-                } catch (err) {
-                    console.error(err);
-                    showToast('Error enrolling in course.', 'error');
+                    return;
                 }
-                return;
-            }
 
-            const watchBtn = e.target.closest('.watch-btn');
-            if (watchBtn) {
-                const video = watchBtn.getAttribute('data-video');
-                const title = watchBtn.getAttribute('data-title');
-                const courseId = watchBtn.getAttribute('data-id');
-                const progress = parseInt(watchBtn.getAttribute('data-progress')) || 0;
-                openVideoModal(video, title, courseId, progress);
-            }
-        });
+                const watchBtn = e.target.closest('.watch-btn');
+                if (watchBtn) {
+                    const video = watchBtn.getAttribute('data-video');
+                    const title = watchBtn.getAttribute('data-title');
+                    const courseId = watchBtn.getAttribute('data-id');
+                    const progress = parseInt(watchBtn.getAttribute('data-progress')) || 0;
+                    openVideoModal(video, title, courseId, progress);
+                }
+            });
+        }
 
         function openVideoModal(videoUrl, title, courseId, currentProgress) {
             let modal = document.getElementById('video-modal');
@@ -1085,24 +1087,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>`;
                 document.body.appendChild(modal);
                 document.getElementById('close-video-modal').addEventListener('click', () => {
-                    document.getElementById('video-modal-iframe').src = '';
+                    const iframe = document.getElementById('video-modal-iframe');
+                    if (iframe) iframe.src = '';
+                    const video = document.getElementById('video-modal-video');
+                    if (video) video.pause();
                     modal.remove();
                 });
             }
             
             document.getElementById('video-modal-title').textContent = title;
             
+            const container = document.getElementById('video-modal-iframe').parentElement;
+            
             // Convert standard YouTube/Vimeo URLs to embed URLs
-            let embedUrl = videoUrl;
             const ytMatch = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
             if (ytMatch) {
-                embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1`;
+                container.innerHTML = `<iframe id="video-modal-iframe" width="100%" height="100%" src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`;
             } else if (videoUrl.includes('vimeo.com')) {
                 const vimeoId = videoUrl.split('/').pop();
-                embedUrl = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+                container.innerHTML = `<iframe id="video-modal-iframe" width="100%" height="100%" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`;
+            } else {
+                container.innerHTML = `<video id="video-modal-video" width="100%" height="100%" controls autoplay><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
             }
-            
-            document.getElementById('video-modal-iframe').src = embedUrl;
 
             const updateBtn = document.getElementById('btn-update-progress');
             updateBtn.style.display = currentProgress >= 100 ? 'none' : 'flex';
@@ -1421,7 +1427,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('file', file);
                 
                 try {
-                    const uploadRes = await fetch(API_BASE + '/api/upload', {
+                    const uploadRes = await apiFetch('/api/upload', {
                         method: 'POST',
                         body: formData
                     });
@@ -1553,7 +1559,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const formData = new FormData();
                     formData.append('file', selectedResumeFile);
                     
-                    const uploadRes = await fetch(API_BASE + '/api/upload', {
+                    const uploadRes = await apiFetch('/api/upload', {
                         method: 'POST',
                         body: formData
                     });
@@ -2009,6 +2015,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="tf-btn ${savedAns === 'FALSE' ? 'selected' : ''}" data-value="FALSE">False</button>
                     </div>
                 `;
+            } else if (q.questionType === 'SHORT_ANSWER') {
+                optionsHtml = `
+                    <textarea class="sa-textarea" placeholder="Type your short answer here..." rows="2">${escapeHtml(savedAns)}</textarea>
+                `;
+            } else if (q.questionType === 'FILL_IN_BLANKS') {
+                optionsHtml = `
+                    <input type="text" class="fib-input" style="width:100%; padding:12px; border:1px solid var(--border-light); border-radius:8px; background:var(--bg-dark); color:var(--text-light); font-size:16px;" placeholder="Type the exact word or phrase..." value="${escapeHtml(savedAns)}">
+                `;
+            } else if (q.questionType === 'CODING') {
+                optionsHtml = `
+                    <textarea class="coding-textarea" placeholder="// Write your code here..." rows="10" style="width:100%; padding:12px; border:1px solid var(--border-light); border-radius:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; font-size:14px; resize:vertical;">${escapeHtml(savedAns)}</textarea>
+                `;
             } else {
                 optionsHtml = `
                     <textarea class="sa-textarea" placeholder="Type your answer here..." rows="4">${escapeHtml(savedAns)}</textarea>
@@ -2048,12 +2066,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // Short Answer key up handler
+            // Text input handlers
             const textarea = container.querySelector('.sa-textarea');
             if (textarea) {
-                textarea.addEventListener('input', () => {
-                    saveAnswer(q.id, textarea.value);
-                });
+                textarea.addEventListener('input', () => saveAnswer(q.id, textarea.value));
+            }
+            const fibInput = container.querySelector('.fib-input');
+            if (fibInput) {
+                fibInput.addEventListener('input', () => saveAnswer(q.id, fibInput.value));
+            }
+            const codingTextarea = container.querySelector('.coding-textarea');
+            if (codingTextarea) {
+                codingTextarea.addEventListener('input', () => saveAnswer(q.id, codingTextarea.value));
             }
 
             // Prev and Next navigation
@@ -2240,9 +2264,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if (res.ok) {
+                        const savedQuiz = await res.json();
                         showToast(editId ? 'Test updated successfully!' : 'Test created successfully!', 'success');
                         overlay.style.display = 'none';
                         loadAdminQuizzes();
+                        if (!editId) {
+                            openQuestionsModal(savedQuiz.id, savedQuiz.title);
+                        }
                     } else {
                         const err = await res.json();
                         showToast(err.message || 'Failed to save test details', 'error');
@@ -2444,6 +2472,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('mcq-options-group').style.display = type === 'MCQ' ? 'block' : 'none';
                 document.getElementById('tf-options-group').style.display = type === 'TRUE_FALSE' ? 'block' : 'none';
                 document.getElementById('sa-options-group').style.display = type === 'SHORT_ANSWER' ? 'block' : 'none';
+                document.getElementById('fib-options-group').style.display = type === 'FILL_IN_BLANKS' ? 'block' : 'none';
+                document.getElementById('coding-options-group').style.display = type === 'CODING' ? 'block' : 'none';
             });
         }
 
@@ -2522,7 +2552,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 let correctAnswer = '';
                 if (type === 'MCQ') correctAnswer = document.getElementById('aqf-correct-mcq').value;
                 else if (type === 'TRUE_FALSE') correctAnswer = document.getElementById('aqf-correct-tf').value;
-                else correctAnswer = document.getElementById('aqf-correct-sa').value.trim();
+                else if (type === 'SHORT_ANSWER') correctAnswer = document.getElementById('aqf-correct-sa').value.trim();
+                else if (type === 'FILL_IN_BLANKS') correctAnswer = document.getElementById('aqf-correct-fib').value.trim();
+                else if (type === 'CODING') correctAnswer = document.getElementById('aqf-correct-coding').value.trim();
 
                 const payload = {
                     questionType: type,

@@ -304,7 +304,10 @@ public class QuizController {
             String studentAnswer = answers.get(q.getId().toString());
             if (studentAnswer != null && !studentAnswer.isBlank()) {
                 String correct = q.getCorrectAnswer();
-                if ("SHORT_ANSWER".equals(q.getQuestionType())) {
+                if ("CODING".equals(q.getQuestionType())) {
+                    // Coding questions require manual grading. They cannot be auto-scored via exact string match.
+                    // Score remains 0 for this question until an admin grades it manually.
+                } else if ("SHORT_ANSWER".equals(q.getQuestionType()) || "FILL_IN_BLANKS".equals(q.getQuestionType())) {
                     if (studentAnswer.trim().equalsIgnoreCase(correct.trim())) score += q.getMarks();
                 } else {
                     if (studentAnswer.trim().equalsIgnoreCase(correct.trim())) score += q.getMarks();
